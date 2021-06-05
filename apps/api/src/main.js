@@ -30,9 +30,8 @@ const QUESTION_BANK = [
   score: Math.round(Math.random() * 10) * 100,
 }));
 
-var currentRound = {
-  questions: [],
-};
+var historicalRounds = [];
+var currentRound = {};
 
 /**
  * Shuffles array in place. ES6 version
@@ -48,6 +47,16 @@ function shuffle(a) {
 
 app.get('/api/round/new', (req, res) => {
   const selectedQuestions = shuffle([...QUESTION_BANK]).slice(0, 16);
+  if (currentRound.questions) {
+    const totalScoreEarned = currentRound.questions.reduce(
+      (result, { score_earned }) => result + score_earned,
+      0
+    );
+    historicalRounds.push({
+      totalScoreEarned,
+    });
+    currentRound = {};
+  }
   currentRound.questions = selectedQuestions.map((question, index) => ({
     ...question,
     id: index,
@@ -65,6 +74,10 @@ app.get('/api/round/new', (req, res) => {
       })
     ),
   });
+});
+
+app.get('/api/round/list', (req, res) => {
+  res.send([...historicalRounds]);
 });
 
 app.get('/api/round/question/:qid', (req, res) => {
