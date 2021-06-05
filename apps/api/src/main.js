@@ -16,22 +16,14 @@ const QUESTION_BANK = [
   {
     category: 'Sports',
     question: 'What’s the diameter of a basketball hoop in inches?',
-    choices: {
-      a: '14 inches',
-      b: '16 inches',
-      c: '18 inches',
-    },
-    answer: 'c',
+    choices: ['14 inches', '16 inches', '18 inches'],
+    answer: 2,
   },
   {
     category: 'Science',
     question: 'This essential gas is important so that we can breathe',
-    choices: {
-      a: 'Oxygen',
-      b: 'Nitrogen',
-      c: 'Helium',
-    },
-    answer: 'a',
+    choices: ['Oxygen', 'Nitrogen', 'Helium'],
+    answer: 0,
   },
 ].map((element) => ({
   ...element,
