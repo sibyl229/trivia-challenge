@@ -53,11 +53,9 @@ var currentRound = {
   return a;
 }
 
-app.get('/api/new-round', (req, res) => {
+app.get('/api/round/new', (req, res) => {
   const selectedQuestions = shuffle([...QUESTION_BANK]).slice(0, 16);
-  currentRound = {
-    questions: selectedQuestions,
-  }
+  currentRound.questions = selectedQuestions;
   res.send({
     questions: selectedQuestions.map(({category, score}, index) => ({
       id: index,
@@ -65,7 +63,24 @@ app.get('/api/new-round', (req, res) => {
       score,
     }))
   })
-})
+});
+
+app.get('/api/round/question/:qid', (req, res) => {
+  const {
+    id,
+    score,
+    category,
+    question,
+    choices,
+  } = currentRound.questions[req.params.qid] || {};
+  res.send({
+    id,
+    score,
+    category,
+    question,
+    choices,
+  })
+});
 
 const port = process.env.port || 3333;
 const server = app.listen(port, () => {
