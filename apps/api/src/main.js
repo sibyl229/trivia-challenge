@@ -20,15 +20,42 @@ const QUESTION_BANK = [
     answer: 2,
   },
   {
+    category: 'Sports',
+    question: 'How big is an Olympic sized swimming pool in meters?',
+    choices: ['50m x 30m', '50m x 25m', '60m x 30m'],
+    answer: 1,
+  },
+  {
+    category: 'Sports',
+    question:
+      'In professional basketball, how high is the basketball hoop from the ground?',
+    choices: ['10ft', '11ft', '12ft'],
+    answer: 0,
+  },
+  {
     category: 'Science',
     question: 'This essential gas is important so that we can breathe',
     choices: ['Oxygen', 'Nitrogen', 'Helium'],
     answer: 0,
   },
-].map((element) => ({
-  ...element,
-  score: Math.round(Math.random() * 10) * 100,
-}));
+  {
+    category: 'Music',
+    question: 'Who was the very first American Idol winner?',
+    choices: ['Kelly Clarkson', 'Ryan Starr', 'Hilary Duff'],
+    answer: 0,
+  },
+  {
+    category: 'Nature',
+    question: 'What part of the plant conducts photosynthesis?',
+    choices: ['Stem', 'Flower', 'Leaf'],
+    answer: 2,
+  },
+]
+  .flatMap((element) => [element, element, element, element])
+  .map((element) => ({
+    ...element,
+    score: Math.round(Math.random() * 10) * 100,
+  }));
 
 var historicalRounds = [];
 var currentRound = {};
