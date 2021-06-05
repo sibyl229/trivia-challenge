@@ -18,7 +18,7 @@ const QUESTION_BANK = [
     choices: {
       a: '14 inches',
       b: '16 inches',
-      c: '18 inches'
+      c: '18 inches',
     },
     answer: 'c',
   },
@@ -31,11 +31,11 @@ const QUESTION_BANK = [
       c: 'Helium',
     },
     answer: 'a',
-  }
+  },
 ].map((element, index) => ({
   ...element,
-  score: Math.round(Math.random() * 10) * 100
-})),
+  score: Math.round(Math.random() * 10) * 100,
+}));
 
 var currentRound = {
   questions: [],
@@ -45,41 +45,45 @@ var currentRound = {
  * Shuffles array in place. ES6 version
  * @param {Array} a items An array containing the items.
  */
- function shuffle(a) {
+function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
 }
 
 app.get('/api/round/new', (req, res) => {
   const selectedQuestions = shuffle([...QUESTION_BANK]).slice(0, 16);
-  currentRound.questions = selectedQuestions;
+  currentRound.questions = selectedQuestions.map((question, index) => ({
+    ...question,
+    id: index,
+    status: 'new',
+    score_earned: 0,
+  }));
   res.send({
-    questions: selectedQuestions.map(({category, score}, index) => ({
-      id: index,
-      category,
-      score,
-    }))
-  })
+    questions: selectedQuestions.map(
+      ({ category, score, status, score_earned }, index) => ({
+        id: index,
+        category,
+        score,
+        status,
+        score_earned,
+      })
+    ),
+  });
 });
 
 app.get('/api/round/question/:qid', (req, res) => {
-  const {
-    id,
-    score,
-    category,
-    question,
-    choices,
-  } = currentRound.questions[req.params.qid] || {};
+  const { id, score, category, question, choices } =
+    currentRound.questions[req.params.qid] || {};
   res.send({
     id,
     score,
     category,
     question,
     choices,
-  })
+  });
 });
 
 const port = process.env.port || 3333;
