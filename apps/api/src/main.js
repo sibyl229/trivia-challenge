@@ -6,6 +6,7 @@
 import * as express from 'express';
 
 const app = express();
+app.use(express.json());
 
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to api!' });
@@ -32,7 +33,7 @@ const QUESTION_BANK = [
     },
     answer: 'a',
   },
-].map((element, index) => ({
+].map((element) => ({
   ...element,
   score: Math.round(Math.random() * 10) * 100,
 }));
@@ -83,6 +84,22 @@ app.get('/api/round/question/:qid', (req, res) => {
     category,
     question,
     choices,
+  });
+});
+
+app.post('/api/round/question/:qid', (req, res) => {
+  const { userAnswer, passed } = req.body || {};
+  console.log(JSON.stringify(passed));
+  const currentQuestion = currentRound.questions[req.params.qid] || {};
+  currentQuestion.status = passed ? 'passed' : 'answered';
+  currentQuestion.score_earned = passed
+    ? 0
+    : userAnswer === currentQuestion.answer
+    ? currentQuestion.score
+    : -1 * currentQuestion.score;
+  currentQuestion.userAnswer = userAnswer;
+  res.send({
+    ...currentQuestion,
   });
 });
 
