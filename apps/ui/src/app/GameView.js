@@ -1,9 +1,12 @@
 import { useCurrentRoundData } from './CurrentRoundDataProvider';
+import { useState } from 'react';
 import TriviaBoard from './TriviaBoard';
 import TriviaCard from './TriviaCard';
+import TriviaDialog from './TiviaDialog';
 
 const GameView = () => {
   const { newRound, loading, error, data } = useCurrentRoundData();
+  const [isOpen, setIsOpen] = useState(false);
 
   if (loading) {
     return '...loading';
@@ -19,9 +22,14 @@ const GameView = () => {
       <pre>{JSON.stringify(questions, null, 2)}</pre>
       <TriviaBoard>
         {questions.map((question) => (
-          <TriviaCard key={question.id} {...question} />
+          <TriviaCard
+            key={question.id}
+            {...question}
+            onClick={() => setIsOpen(true)}
+          />
         ))}
       </TriviaBoard>
+      <TriviaDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };
