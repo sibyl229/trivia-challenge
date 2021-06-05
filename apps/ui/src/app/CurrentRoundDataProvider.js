@@ -6,7 +6,7 @@ const CurrentRoundDataContext = React.createContext();
 export const CurrentRoundDataProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
 
   const newRound = useCallback(() => {
     setLoading(true);
