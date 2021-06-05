@@ -1,9 +1,14 @@
 import tw from 'twin.macro';
 import { Route, Link } from 'react-router-dom';
+import CurrentRoundDataProvider from './CurrentRoundDataProvider';
+import GameView from './GameView';
 
 export function App() {
   return (
     <>
+      <CurrentRoundDataProvider>
+        <GameView />
+      </CurrentRoundDataProvider>
       <div tw="text-4xl">zzzzz</div>
       <Route
         path="/"
