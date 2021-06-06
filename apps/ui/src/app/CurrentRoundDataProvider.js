@@ -25,15 +25,16 @@ export const CurrentRoundDataProvider = ({ children }) => {
 
   const selectQuestion = useCallback(
     (questionId) => {
+      setData((prevData) => ({
+        ...prevData,
+        currentQuestionId: undefined,
+      }));
       axios
         .get(`/api/round/question/${questionId}`)
         .then((response) => {
           setData((prevData) => {
-            console.log('zzz:' + questionId);
-            console.log(prevData);
             return {
               ...prevData,
-              a: 'zzzz',
               currentQuestionId: questionId,
               questions: prevData.questions.map((question) => {
                 if (question.id === questionId) {
@@ -58,26 +59,23 @@ export const CurrentRoundDataProvider = ({ children }) => {
       axios
         .post(`/api/round/question/${questionId}`)
         .then((response) => {
-          const { questionId } = response.data;
-          const { questions } = data;
-          setData({
-            ...data,
-            currentQuestionId: undefined,
-            questions: questions.map((question) => {
+          setData((prevData) => ({
+            ...prevData,
+            questions: prevData.questions.map((question) => {
               if (question.id === questionId) {
                 return {
                   ...question,
-                  ...response,
+                  ...response.data,
                 };
               } else {
                 return question;
               }
             }),
-          });
+          }));
         })
         .catch((error) => setError(error));
     },
-    [data, setData, setError]
+    [setData, setError]
   );
 
   const value = useMemo(

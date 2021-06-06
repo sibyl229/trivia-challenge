@@ -36,13 +36,15 @@ const GameView = () => {
               onClick={() => {
                 console.log(questionId);
                 selectQuestion(questionId);
+                setIsOpen(true);
               }}
             />
           );
         })}
       </TriviaBoard>
       <TriviaDialog
-        isOpen={currentQuestionId !== undefined}
+        isOpen={currentQuestionId !== undefined && isOpen}
+        setIsOpen={setIsOpen}
         question={questions[currentQuestionId]}
         answerQuestion={answerQuestion}
       />
