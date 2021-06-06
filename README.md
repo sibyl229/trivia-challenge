@@ -9,7 +9,19 @@ Install the latest node.js LTS (version 14) or [according to .nvmrc](.nvmrc).
 Then install NPM dependencies:
 `npm install`
 
+## Folder structure
+
+This repo is organized as Nx monorepo.
+
+`apps/ui/` contains the user interface code written in React.
+
+`apps/api/` contains the REST API code written in Express.
+
+`package.json` at the root of the repo is common to all `apps`.
+
 ## Start Development server
+
+Please ensure that you are at the root of the repo, before running the following commands.
 
 Run `npm start api` to start the API server. Navigate to http://localhost:3333/api.
 
