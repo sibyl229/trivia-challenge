@@ -53,6 +53,7 @@ export default function TriviaDialog({
 
   useEffect(() => {
     setCountDown(60);
+    setUserAnswer(-1);
   }, [questionId]);
 
   useEffect(() => {
