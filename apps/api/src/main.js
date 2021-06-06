@@ -33,10 +33,40 @@ const QUESTION_BANK = [
     answer: 0,
   },
   {
+    category: 'Sports',
+    question: '?The Summer Olympics are held every how many years?',
+    choices: ['2 years', '4 years', '6 years'],
+    answer: 1,
+  },
+  {
+    category: 'Science',
+    question: 'This essential gas is important so that we can breathe?',
+    choices: ['Oxygen', 'Nitrogen', 'Helium'],
+    answer: 0,
+  },
+  {
+    category: 'Science',
+    question: 'What is the nearest planet to the sun?',
+    choices: ['Mars', 'Pluto', 'Mercury'],
+    answer: 2,
+  },
+  {
+    category: 'Science',
+    question: 'What is the largest planet in the solar system?',
+    choices: ['Earth', 'Saturn', 'Jupiter'],
+    answer: 2,
+  },
+  {
     category: 'Science',
     question: 'This essential gas is important so that we can breathe',
     choices: ['Oxygen', 'Nitrogen', 'Helium'],
     answer: 0,
+  },
+  {
+    category: 'Science',
+    question: 'What is the rarest blood type?',
+    choices: ['O positive', 'AB negative', 'B negative'],
+    answer: 1,
   },
   {
     category: 'Music',
@@ -45,17 +75,67 @@ const QUESTION_BANK = [
     answer: 0,
   },
   {
+    category: 'Music',
+    question:
+      'Before Miley Cyrus recorded “Wrecking Ball,” it was offered to which singer?',
+    choices: ['Alicia Keys', 'Beyoncé (correct)', 'Leona Lewis'],
+    answer: 1,
+  },
+  {
+    category: 'Music',
+    question:
+      'What rock icon was the founder of The Society for the Prevention of Cruelty to Long-haired Men?',
+    choices: ['David Bowie', 'Peter Frampton', 'Mick Jagger'],
+    answer: 0,
+  },
+  {
+    category: 'Music',
+    question: 'Eminem‘s 8 Mile is named after a road in which city?',
+    choices: ['Chicago', 'San Fran', 'Detroit'],
+    answer: 2,
+  },
+  {
+    category: 'Music',
+    question:
+      'Who was the first woman ever inducted into the Rock and Roll Hall of Fame?',
+    choices: ['Janice Joplin', 'Aretha Franklin', 'Pat Benatar'],
+    answer: 1,
+  },
+  {
     category: 'Nature',
     question: 'What part of the plant conducts photosynthesis?',
     choices: ['Stem', 'Flower', 'Leaf'],
     answer: 2,
   },
-]
-  .flatMap((element) => [element, element, element, element])
-  .map((element) => ({
-    ...element,
-    score: Math.round(Math.random() * 10) * 100,
-  }));
+  {
+    category: 'Nature',
+    question: 'What is the largest known land animal?',
+    choices: ['Hippopotamus', 'Elephant', 'Giraffe'],
+    answer: 1,
+  },
+  {
+    category: 'Nature',
+    question: 'How many bones to sharks have in total?',
+    choices: ['0 bones', '3 bones', '12 bones'],
+    answer: 2,
+  },
+  {
+    category: 'Nature',
+    question:
+      'Dolly was the first ever living creature to be cloned. What type of animal was she?',
+    choices: ['Sheep', 'Mouse', 'Worm'],
+    answer: 0,
+  },
+  {
+    category: 'Nature',
+    question: 'What is the tallest type of grass?',
+    choices: ['Northwind switch grass', 'Pampas grass', 'Bamboo'],
+    answer: 2,
+  },
+].map((element) => ({
+  ...element,
+  score: Math.round(Math.random() * 10 + 1) * 100,
+}));
 
 var historicalRounds = [];
 var currentRound = {};
