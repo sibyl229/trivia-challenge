@@ -5,7 +5,7 @@ const TiviaCard = ({ category, score, onClick, status }) => {
   return (
     <div
       css={[
-        tw`flex flex-col items-center text-white p-5 m-2 rounded-md`,
+        tw`flex flex-col items-center text-white p-5 m-2 rounded-md shadow`,
         tw`cursor-pointer`,
         status !== 'new' && tw`invisible`,
         category === 'Sports' && tw`bg-indigo-500`,
