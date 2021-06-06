@@ -12,7 +12,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useInterval from './hooks/useInterval';
 
 export default function FormDialog({ isOpen, question, answerQuestion }) {
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState(-1);
   const { id: questionId, question: questionPhrase, choices = [] } =
     question || {};
 
@@ -21,7 +21,7 @@ export default function FormDialog({ isOpen, question, answerQuestion }) {
   };
 
   const handleSubmitAnswer = useCallback(() => {
-    answerQuestion(questionId, parseInt(answer));
+    answerQuestion(questionId, answer);
   }, [questionId, answerQuestion, answer]);
 
   const [countDown, setCountDown] = useState(60);
@@ -51,9 +51,9 @@ export default function FormDialog({ isOpen, question, answerQuestion }) {
           <RadioGroup
             aria-label="answer"
             name="answer"
-            value={answer}
+            value={`${answer}`}
             onChange={(e) => {
-              setAnswer(e.target.value);
+              setAnswer(parseInt(e.target.value));
             }}
           >
             {choices.map((choice, index) => (
