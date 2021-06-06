@@ -32,6 +32,7 @@ const GameView = () => {
     numQuestionsRemaining,
     numQuestionsTotal,
     numQuestionsCorrect,
+    numPassesRemaining,
   } = data;
 
   /*   const [numCorrect, numTotal] = useMemo(() => {
@@ -72,6 +73,7 @@ const GameView = () => {
               setIsOpen={setIsOpen}
               question={questions[currentQuestionId]}
               answerQuestion={answerQuestion}
+              numPassesRemaining={numPassesRemaining}
             />
           </>
         ) : (

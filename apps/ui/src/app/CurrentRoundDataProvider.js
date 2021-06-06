@@ -21,6 +21,7 @@ export const CurrentRoundDataProvider = ({ children }) => {
           numQuestionsTotal: response.data.questions.length,
           numQuestionsCorrect: 0,
           numQuestionsRemaining: response.data.questions.length,
+          numPassesRemaining: 1,
         });
       })
       .catch((error) => {
@@ -75,6 +76,9 @@ export const CurrentRoundDataProvider = ({ children }) => {
             numQuestionsCorrect:
               prevData.numQuestionsCorrect +
               (response.data.score_earned > 0 ? 1 : 0),
+            numPassesRemaining:
+              prevData.numPassesRemaining +
+              (response.data.status === 'passed' ? -1 : 0),
             questions: prevData.questions.map((question) => {
               if (question.id === questionId) {
                 return {

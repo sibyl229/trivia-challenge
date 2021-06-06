@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 import { useCallback, useEffect, useState } from 'react';
 import useInterval from './hooks/useInterval';
 
@@ -16,6 +17,7 @@ export default function TriviaDialog({
   question,
   answerQuestion,
   setIsOpen,
+  numPassesRemaining,
 }) {
   const [userAnswer, setUserAnswer] = useState(-1);
   const {
@@ -116,7 +118,16 @@ export default function TriviaDialog({
             <Button onClick={handleClose}>Close</Button>
           ) : (
             <>
-              <Button onClick={handlePass}>Pass</Button>
+              <Tooltip title="You can pass only once per round" placement="top">
+                <span>
+                  <Button
+                    onClick={handlePass}
+                    disabled={numPassesRemaining <= 0}
+                  >
+                    Pass
+                  </Button>
+                </span>
+              </Tooltip>
               <Button onClick={handleSubmitAnswer} color="primary">
                 Submit
               </Button>
