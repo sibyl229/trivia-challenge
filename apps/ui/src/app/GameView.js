@@ -3,6 +3,7 @@ import { useState } from 'react';
 import TriviaBoard from './TriviaBoard';
 import TriviaCard from './TriviaCard';
 import TriviaDialog from './TiviaDialog';
+import ScoreBoard from './ScoreBoard';
 
 const GameView = () => {
   const {
@@ -21,10 +22,11 @@ const GameView = () => {
     return error;
   }
 
-  const { questions = [], currentQuestionId } = data;
+  const { questions = [], currentQuestionId, totalScore } = data;
   return (
     <div>
       <button onClick={newRound}>Start new round</button>;
+      <ScoreBoard totalScore={totalScore} />
       <TriviaBoard>
         {questions.map((question) => {
           const { id: questionId } = question;

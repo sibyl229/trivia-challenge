@@ -15,7 +15,10 @@ export const CurrentRoundDataProvider = ({ children }) => {
       .then((response) => {
         setLoading(false);
         setError(null);
-        setData(response.data);
+        setData({
+          ...response.data,
+          totalScore: 0,
+        });
       })
       .catch((error) => {
         setLoading(false);
@@ -64,6 +67,7 @@ export const CurrentRoundDataProvider = ({ children }) => {
         .then((response) => {
           setData((prevData) => ({
             ...prevData,
+            totalScore: prevData.totalScore + response.data.score_earned,
             questions: prevData.questions.map((question) => {
               if (question.id === questionId) {
                 return {
