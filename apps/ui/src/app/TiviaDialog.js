@@ -11,9 +11,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useCallback, useEffect, useState } from 'react';
 import useInterval from './hooks/useInterval';
 
-export default function FormDialog({ isOpen, question, answerQuestion }) {
+export default function FormDialog({
+  isOpen,
+  question,
+  answerQuestion,
+  setIsOpen,
+}) {
   const [userAnswer, setUserAnswer] = useState(-1);
-  const { id: questionId, question: questionPhrase, choices = [] } =
+  const { id: questionId, question: questionPhrase, choices = [], status } =
     question || {};
 
   const handlePass = () => {
@@ -23,6 +28,12 @@ export default function FormDialog({ isOpen, question, answerQuestion }) {
   const handleSubmitAnswer = useCallback(() => {
     answerQuestion(questionId, userAnswer);
   }, [questionId, answerQuestion, userAnswer]);
+
+  const handleClose = useCallback(() => {
+    if (status === 'answered') {
+      setIsOpen(false);
+    }
+  }, [setIsOpen, status]);
 
   const [countDown, setCountDown] = useState(60);
   const updateTimer = useCallback(() => {
@@ -44,7 +55,11 @@ export default function FormDialog({ isOpen, question, answerQuestion }) {
 
   return (
     <div>
-      <Dialog open={isOpen} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={isOpen}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">Question</DialogTitle>
         <DialogContent>
           <DialogContentText>{questionPhrase}</DialogContentText>
@@ -67,12 +82,16 @@ export default function FormDialog({ isOpen, question, answerQuestion }) {
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handlePass} color="primary">
-            Pass
-          </Button>
-          <Button onClick={handleSubmitAnswer} color="primary">
-            Subscribe
-          </Button>
+          {status === 'answered' ? (
+            <Button onClick={handleClose}>Close</Button>
+          ) : (
+            <>
+              <Button onClick={handlePass}>Pass</Button>
+              <Button onClick={handleSubmitAnswer} color="primary">
+                Submit
+              </Button>
+            </>
+          )}
         </DialogActions>
       </Dialog>
     </div>
