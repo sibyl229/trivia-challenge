@@ -18,6 +18,9 @@ export const CurrentRoundDataProvider = ({ children }) => {
         setData({
           ...response.data,
           totalScore: 0,
+          numQuestionsTotal: response.data.questions.length,
+          numQuestionsCorrect: 0,
+          numQuestionsRemaining: response.data.questions.length,
         });
       })
       .catch((error) => {
@@ -68,6 +71,10 @@ export const CurrentRoundDataProvider = ({ children }) => {
           setData((prevData) => ({
             ...prevData,
             totalScore: prevData.totalScore + response.data.score_earned,
+            numQuestionsRemaining: prevData.numQuestionsRemaining - 1,
+            numQuestionsCorrect:
+              prevData.numQuestionCorrect +
+              (response.data.score_earned > 0 ? 1 : 0),
             questions: prevData.questions.map((question) => {
               if (question.id === questionId) {
                 return {
