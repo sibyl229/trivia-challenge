@@ -56,7 +56,7 @@ const GameView = () => {
                 const { id: questionId } = question;
                 return (
                   <TriviaCard
-                    key={question.id}
+                    key={questionId}
                     {...question}
                     onClick={() => {
                       console.log(questionId);
@@ -82,12 +82,7 @@ const GameView = () => {
         )}
         {numQuestionsRemaining === 0 || questions.length === 0 ? (
           <div>
-            <Button
-              variant="contained"
-              onClick={newRound}
-              color="primary"
-              variant="outlined"
-            >
+            <Button onClick={newRound} color="primary" variant="outlined">
               Start new round
             </Button>
           </div>
