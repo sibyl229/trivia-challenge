@@ -23,9 +23,35 @@ export const CurrentRoundDataProvider = ({ children }) => {
       });
   }, []);
 
-  /*  const selectQuestion = useCallback((questionId) => {
-    axios.get(`/api/round/question/${questionId}`);
-  }, []); */
+  const selectQuestion = useCallback(
+    (questionId) => {
+      axios
+        .get(`/api/round/question/${questionId}`)
+        .then((response) => {
+          setData((prevData) => {
+            console.log('zzz:' + questionId);
+            console.log(prevData);
+            return {
+              ...prevData,
+              a: 'zzzz',
+              currentQuestionId: questionId,
+              questions: prevData.questions.map((question) => {
+                if (question.id === questionId) {
+                  return {
+                    ...question,
+                    ...response.data,
+                  };
+                } else {
+                  return question;
+                }
+              }),
+            };
+          });
+        })
+        .catch((error) => setError(error));
+    },
+    [setData, setError]
+  );
 
   const answerQuestion = useCallback(
     (questionId, answer, passed = false) => {
@@ -36,6 +62,7 @@ export const CurrentRoundDataProvider = ({ children }) => {
           const { questions } = data;
           setData({
             ...data,
+            currentQuestionId: undefined,
             questions: questions.map((question) => {
               if (question.id === questionId) {
                 return {
@@ -59,9 +86,10 @@ export const CurrentRoundDataProvider = ({ children }) => {
       error,
       data,
       newRound,
+      selectQuestion,
       answerQuestion,
     }),
-    [data, loading, error, newRound, answerQuestion]
+    [data, loading, error, newRound, selectQuestion, answerQuestion]
   );
   return (
     <CurrentRoundDataContext.Provider value={value}>

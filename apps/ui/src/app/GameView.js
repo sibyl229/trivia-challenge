@@ -5,7 +5,14 @@ import TriviaCard from './TriviaCard';
 import TriviaDialog from './TiviaDialog';
 
 const GameView = () => {
-  const { newRound, loading, error, data } = useCurrentRoundData();
+  const {
+    newRound,
+    selectQuestion,
+    answerQuestion,
+    loading,
+    error,
+    data,
+  } = useCurrentRoundData();
   const [isOpen, setIsOpen] = useState(false);
 
   if (loading) {
@@ -14,22 +21,31 @@ const GameView = () => {
     return error;
   }
 
-  console.log(data);
-  const { questions = [] } = data;
+  const { questions = [], currentQuestionId } = data;
   return (
     <div>
       <button onClick={newRound}>Start new round</button>;
       <pre>{JSON.stringify(questions, null, 2)}</pre>
       <TriviaBoard>
-        {questions.map((question) => (
-          <TriviaCard
-            key={question.id}
-            {...question}
-            onClick={() => setIsOpen(true)}
-          />
-        ))}
+        {questions.map((question) => {
+          const { id: questionId } = question;
+          return (
+            <TriviaCard
+              key={question.id}
+              {...question}
+              onClick={() => {
+                console.log(questionId);
+                selectQuestion(questionId);
+              }}
+            />
+          );
+        })}
       </TriviaBoard>
-      <TriviaDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+      <TriviaDialog
+        isOpen={currentQuestionId !== undefined}
+        question={questions[currentQuestionId]}
+        answerQuestion={answerQuestion}
+      />
     </div>
   );
 };
