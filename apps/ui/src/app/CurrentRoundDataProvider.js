@@ -73,7 +73,7 @@ export const CurrentRoundDataProvider = ({ children }) => {
             totalScore: prevData.totalScore + response.data.score_earned,
             numQuestionsRemaining: prevData.numQuestionsRemaining - 1,
             numQuestionsCorrect:
-              prevData.numQuestionCorrect +
+              prevData.numQuestionsCorrect +
               (response.data.score_earned > 0 ? 1 : 0),
             questions: prevData.questions.map((question) => {
               if (question.id === questionId) {
