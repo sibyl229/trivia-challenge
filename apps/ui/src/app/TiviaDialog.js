@@ -43,10 +43,10 @@ export default function FormDialog({
 
   const [countDown, setCountDown] = useState(60);
   const updateTimer = useCallback(() => {
-    if (countDown > 0) {
+    if (countDown > 0 && status === 'new') {
       setCountDown(countDown - 1);
     }
-  }, [countDown, setCountDown]);
+  }, [countDown, setCountDown, status]);
   useInterval(updateTimer, 1000);
 
   useEffect(() => {
@@ -66,7 +66,9 @@ export default function FormDialog({
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Question</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {countDown} seconds left
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>{questionPhrase}</DialogContentText>
           <RadioGroup
