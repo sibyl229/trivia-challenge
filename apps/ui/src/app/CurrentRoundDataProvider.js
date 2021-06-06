@@ -55,9 +55,12 @@ export const CurrentRoundDataProvider = ({ children }) => {
   );
 
   const answerQuestion = useCallback(
-    (questionId, answer, passed = false) => {
+    (questionId, userAnswer, passed = false) => {
       axios
-        .post(`/api/round/question/${questionId}`)
+        .post(`/api/round/question/${questionId}`, {
+          userAnswer: userAnswer,
+          passed,
+        })
         .then((response) => {
           setData((prevData) => ({
             ...prevData,
