@@ -66,7 +66,7 @@ export default function FormDialog({
           <RadioGroup
             aria-label="answer"
             name="answer"
-            value={`${userAnswer}`}
+            value={userAnswer}
             onChange={(e) => {
               setUserAnswer(parseInt(e.target.value));
             }}
@@ -74,7 +74,7 @@ export default function FormDialog({
             {choices.map((choice, index) => (
               <FormControlLabel
                 key={index}
-                value={index.toString()}
+                value={index}
                 control={<Radio />}
                 label={choice}
               />
