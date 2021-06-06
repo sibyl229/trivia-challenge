@@ -18,8 +18,14 @@ export default function FormDialog({
   setIsOpen,
 }) {
   const [userAnswer, setUserAnswer] = useState(-1);
-  const { id: questionId, question: questionPhrase, choices = [], status } =
-    question || {};
+  const {
+    id: questionId,
+    question: questionPhrase,
+    choices = [],
+    status,
+    answer,
+    score,
+  } = question || {};
 
   const handlePass = () => {
     answerQuestion(questionId, undefined, true);
@@ -30,7 +36,7 @@ export default function FormDialog({
   }, [questionId, answerQuestion, userAnswer]);
 
   const handleClose = useCallback(() => {
-    if (status === 'answered') {
+    if (status !== 'new') {
       setIsOpen(false);
     }
   }, [setIsOpen, status]);
@@ -72,17 +78,39 @@ export default function FormDialog({
             }}
           >
             {choices.map((choice, index) => (
-              <FormControlLabel
-                key={index}
-                value={index}
-                control={<Radio />}
-                label={choice}
-              />
+              <div
+                css={[
+                  tw`flex justify-between items-center px-2`,
+                  status === 'answered' && index === userAnswer
+                    ? userAnswer === answer
+                      ? tw`bg-green-200`
+                      : tw`bg-red-200`
+                    : null,
+                ]}
+              >
+                <FormControlLabel
+                  key={index}
+                  value={index}
+                  disabled={status !== 'new'}
+                  control={<Radio color="primary" />}
+                  label={choice}
+                />
+                {status === 'new' ? null : (
+                  <span tw="text-right">
+                    {index === answer ? 'Correct answer ' : null}
+                    {index === userAnswer
+                      ? index === answer
+                        ? `+${score}pts`
+                        : `-${score}pts`
+                      : null}
+                  </span>
+                )}
+              </div>
             ))}
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-          {status === 'answered' ? (
+          {status !== 'new' ? (
             <Button onClick={handleClose}>Close</Button>
           ) : (
             <>

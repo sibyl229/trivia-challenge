@@ -108,12 +108,14 @@ app.get('/api/round/list', (req, res) => {
 });
 
 app.get('/api/round/question/:qid', (req, res) => {
-  const { id, score, category, question, choices } =
+  const { id, score, category, question, choices, status, score_earned } =
     currentRound.questions[req.params.qid] || {};
   res.send({
     id,
     score,
     category,
+    status,
+    score_earned,
     question,
     choices,
   });
@@ -124,6 +126,7 @@ app.post('/api/round/question/:qid', (req, res) => {
   console.log(JSON.stringify(passed));
   const currentQuestion = currentRound.questions[req.params.qid] || {};
   currentQuestion.status = passed ? 'passed' : 'answered';
+  currentQuestion.userAnswer = passed ? -1 : userAnswer;
   if (passed) {
     currentQuestion.score_earned = 0;
   } else if (userAnswer === currentQuestion.answer) {
@@ -131,7 +134,7 @@ app.post('/api/round/question/:qid', (req, res) => {
   } else {
     currentQuestion.score_earned = currentQuestion.score * -1;
   }
-  currentQuestion.userAnswer = userAnswer;
+
   res.send({
     ...currentQuestion,
   });
