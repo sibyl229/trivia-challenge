@@ -16,6 +16,6 @@ describe('App', () => {
         <App />
       </BrowserRouter>
     );
-    expect(getByText('Welcome to ui!')).toBeTruthy();
+    expect(getByText('Trivia Quiz')).toBeTruthy();
   });
 });
