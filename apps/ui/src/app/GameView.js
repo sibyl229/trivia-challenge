@@ -25,7 +25,6 @@ const GameView = () => {
   return (
     <div>
       <button onClick={newRound}>Start new round</button>;
-      <pre>{JSON.stringify(questions, null, 2)}</pre>
       <TriviaBoard>
         {questions.map((question) => {
           const { id: questionId } = question;

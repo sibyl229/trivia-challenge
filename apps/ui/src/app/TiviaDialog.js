@@ -11,7 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useCallback, useEffect, useState } from 'react';
 import useInterval from './hooks/useInterval';
 
-export default function FormDialog({
+export default function TriviaDialog({
   isOpen,
   question,
   answerQuestion,

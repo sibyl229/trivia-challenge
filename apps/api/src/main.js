@@ -73,7 +73,17 @@ function shuffle(a) {
 }
 
 app.get('/api/round/new', (req, res) => {
-  const selectedQuestions = shuffle([...QUESTION_BANK]).slice(0, 16);
+  const selectedQuestions = shuffle([...QUESTION_BANK])
+    .slice(0, 16)
+    .sort((a, b) => {
+      return a.score - b.score;
+    })
+    .map((question, index) => ({
+      ...question,
+      id: index,
+      status: 'new',
+      score_earned: 0,
+    }));
   if (currentRound.questions) {
     const totalScoreEarned = currentRound.questions.reduce(
       (result, { score_earned }) => result + score_earned,
@@ -84,12 +94,7 @@ app.get('/api/round/new', (req, res) => {
     });
     currentRound = {};
   }
-  currentRound.questions = selectedQuestions.map((question, index) => ({
-    ...question,
-    id: index,
-    status: 'new',
-    score_earned: 0,
-  }));
+  currentRound.questions = selectedQuestions;
   res.send({
     questions: selectedQuestions.map(
       ({ category, score, status, score_earned }, index) => ({
