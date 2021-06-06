@@ -44,7 +44,11 @@ const GameView = () => {
       <ScoreBoard totalScore={totalScore} />
       <hr />
       <div tw="flex flex-col gap-10 h-screen justify-center items-center">
-        <div tw="text-8xl">Trivia Quiz</div>
+        <h1 tw="text-8xl">Trivia Quiz</h1>
+        <h2>
+          Start by picking a question below with a <strong>category</strong> and
+          a <strong>score</strong>
+        </h2>
         {numQuestionsRemaining ? (
           <>
             <TriviaBoard>
